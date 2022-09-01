@@ -2,20 +2,20 @@ SELECT
     hacker_id
 ,   name
 ,   total_score
-FROM
-    (SELECT
+FROM (
+    SELECT
         h.hacker_id
     ,   h.name
     ,   SUM(score) AS total_score
-    FROM
-        (SELECT
+    FROM (
+        SELECT
             hacker_id
         ,   score
         ,   ROW_NUMBER() OVER(
                 PARTITION BY hacker_id, challenge_id
                     ORDER BY score DESC) AS row_num
-            FROM
-                submissions
+        FROM
+            submissions
         ) AS row_scores
     INNER JOIN
         hackers AS h
